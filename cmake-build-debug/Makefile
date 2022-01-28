@@ -64,42 +64,6 @@ CMAKE_BINARY_DIR = C:\Users\josea\GitTrab\PublicTransportNavigator\PublicTranspo
 #=============================================================================
 # Targets provided globally by CMake.
 
-# Special rule for the target install/strip
-install/strip: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
-	"C:\Program Files\JetBrains\CLion 2021.2.3\bin\cmake\win\bin\cmake.exe" -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
-.PHONY : install/strip
-
-# Special rule for the target install/strip
-install/strip/fast: preinstall/fast
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
-	"C:\Program Files\JetBrains\CLion 2021.2.3\bin\cmake\win\bin\cmake.exe" -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
-.PHONY : install/strip/fast
-
-# Special rule for the target install/local
-install/local: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
-	"C:\Program Files\JetBrains\CLion 2021.2.3\bin\cmake\win\bin\cmake.exe" -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
-.PHONY : install/local
-
-# Special rule for the target install/local
-install/local/fast: preinstall/fast
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
-	"C:\Program Files\JetBrains\CLion 2021.2.3\bin\cmake\win\bin\cmake.exe" -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
-.PHONY : install/local/fast
-
-# Special rule for the target install
-install: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
-	"C:\Program Files\JetBrains\CLion 2021.2.3\bin\cmake\win\bin\cmake.exe" -P cmake_install.cmake
-.PHONY : install
-
-# Special rule for the target install
-install/fast: preinstall/fast
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
-	"C:\Program Files\JetBrains\CLion 2021.2.3\bin\cmake\win\bin\cmake.exe" -P cmake_install.cmake
-.PHONY : install/fast
-
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
@@ -119,15 +83,6 @@ rebuild_cache:
 # Special rule for the target rebuild_cache
 rebuild_cache/fast: rebuild_cache
 .PHONY : rebuild_cache/fast
-
-# Special rule for the target list_install_components
-list_install_components:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
-.PHONY : list_install_components
-
-# Special rule for the target list_install_components
-list_install_components/fast: list_install_components
-.PHONY : list_install_components/fast
 
 # The main all target
 all: cmake_check_build_system
@@ -161,196 +116,144 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named aed2122_p11
+# Target rules for targets named Projeto2
 
 # Build rule for target.
-aed2122_p11: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 aed2122_p11
-.PHONY : aed2122_p11
+Projeto2: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 Projeto2
+.PHONY : Projeto2
 
 # fast build rule for target.
-aed2122_p11/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\aed2122_p11.dir\build.make CMakeFiles/aed2122_p11.dir/build
-.PHONY : aed2122_p11/fast
+Projeto2/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Projeto2.dir\build.make CMakeFiles/Projeto2.dir/build
+.PHONY : Projeto2/fast
 
-#=============================================================================
-# Target rules for targets named gmock_main
-
-# Build rule for target.
-gmock_main: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 gmock_main
-.PHONY : gmock_main
-
-# fast build rule for target.
-gmock_main/fast:
-	$(MAKE) $(MAKESILENT) -f lib\googletest-master\googlemock\CMakeFiles\gmock_main.dir\build.make lib/googletest-master/googlemock/CMakeFiles/gmock_main.dir/build
-.PHONY : gmock_main/fast
-
-#=============================================================================
-# Target rules for targets named gmock
-
-# Build rule for target.
-gmock: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 gmock
-.PHONY : gmock
-
-# fast build rule for target.
-gmock/fast:
-	$(MAKE) $(MAKESILENT) -f lib\googletest-master\googlemock\CMakeFiles\gmock.dir\build.make lib/googletest-master/googlemock/CMakeFiles/gmock.dir/build
-.PHONY : gmock/fast
-
-#=============================================================================
-# Target rules for targets named gtest
-
-# Build rule for target.
-gtest: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 gtest
-.PHONY : gtest
-
-# fast build rule for target.
-gtest/fast:
-	$(MAKE) $(MAKESILENT) -f lib\googletest-master\googletest\CMakeFiles\gtest.dir\build.make lib/googletest-master/googletest/CMakeFiles/gtest.dir/build
-.PHONY : gtest/fast
-
-#=============================================================================
-# Target rules for targets named gtest_main
-
-# Build rule for target.
-gtest_main: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 gtest_main
-.PHONY : gtest_main
-
-# fast build rule for target.
-gtest_main/fast:
-	$(MAKE) $(MAKESILENT) -f lib\googletest-master\googletest\CMakeFiles\gtest_main.dir\build.make lib/googletest-master/googletest/CMakeFiles/gtest_main.dir/build
-.PHONY : gtest_main/fast
-
-Tests/Lines.obj: Tests/Lines.cpp.obj
-.PHONY : Tests/Lines.obj
+Tests/Application.obj: Tests/Application.cpp.obj
+.PHONY : Tests/Application.obj
 
 # target to build an object file
-Tests/Lines.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\aed2122_p11.dir\build.make CMakeFiles/aed2122_p11.dir/Tests/Lines.cpp.obj
-.PHONY : Tests/Lines.cpp.obj
+Tests/Application.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Projeto2.dir\build.make CMakeFiles/Projeto2.dir/Tests/Application.cpp.obj
+.PHONY : Tests/Application.cpp.obj
 
-Tests/Lines.i: Tests/Lines.cpp.i
-.PHONY : Tests/Lines.i
+Tests/Application.i: Tests/Application.cpp.i
+.PHONY : Tests/Application.i
 
 # target to preprocess a source file
-Tests/Lines.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\aed2122_p11.dir\build.make CMakeFiles/aed2122_p11.dir/Tests/Lines.cpp.i
-.PHONY : Tests/Lines.cpp.i
+Tests/Application.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Projeto2.dir\build.make CMakeFiles/Projeto2.dir/Tests/Application.cpp.i
+.PHONY : Tests/Application.cpp.i
 
-Tests/Lines.s: Tests/Lines.cpp.s
-.PHONY : Tests/Lines.s
+Tests/Application.s: Tests/Application.cpp.s
+.PHONY : Tests/Application.s
 
 # target to generate assembly for a file
-Tests/Lines.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\aed2122_p11.dir\build.make CMakeFiles/aed2122_p11.dir/Tests/Lines.cpp.s
-.PHONY : Tests/Lines.cpp.s
+Tests/Application.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Projeto2.dir\build.make CMakeFiles/Projeto2.dir/Tests/Application.cpp.s
+.PHONY : Tests/Application.cpp.s
 
-Tests/Stop.obj: Tests/Stop.cpp.obj
-.PHONY : Tests/Stop.obj
+Tests/FileReader.obj: Tests/FileReader.cpp.obj
+.PHONY : Tests/FileReader.obj
 
 # target to build an object file
-Tests/Stop.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\aed2122_p11.dir\build.make CMakeFiles/aed2122_p11.dir/Tests/Stop.cpp.obj
-.PHONY : Tests/Stop.cpp.obj
+Tests/FileReader.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Projeto2.dir\build.make CMakeFiles/Projeto2.dir/Tests/FileReader.cpp.obj
+.PHONY : Tests/FileReader.cpp.obj
 
-Tests/Stop.i: Tests/Stop.cpp.i
-.PHONY : Tests/Stop.i
+Tests/FileReader.i: Tests/FileReader.cpp.i
+.PHONY : Tests/FileReader.i
 
 # target to preprocess a source file
-Tests/Stop.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\aed2122_p11.dir\build.make CMakeFiles/aed2122_p11.dir/Tests/Stop.cpp.i
-.PHONY : Tests/Stop.cpp.i
+Tests/FileReader.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Projeto2.dir\build.make CMakeFiles/Projeto2.dir/Tests/FileReader.cpp.i
+.PHONY : Tests/FileReader.cpp.i
 
-Tests/Stop.s: Tests/Stop.cpp.s
-.PHONY : Tests/Stop.s
+Tests/FileReader.s: Tests/FileReader.cpp.s
+.PHONY : Tests/FileReader.s
 
 # target to generate assembly for a file
-Tests/Stop.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\aed2122_p11.dir\build.make CMakeFiles/aed2122_p11.dir/Tests/Stop.cpp.s
-.PHONY : Tests/Stop.cpp.s
+Tests/FileReader.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Projeto2.dir\build.make CMakeFiles/Projeto2.dir/Tests/FileReader.cpp.s
+.PHONY : Tests/FileReader.cpp.s
 
-Tests/funWithGraphs.obj: Tests/funWithGraphs.cpp.obj
-.PHONY : Tests/funWithGraphs.obj
+Tests/LinesGraph.obj: Tests/LinesGraph.cpp.obj
+.PHONY : Tests/LinesGraph.obj
 
 # target to build an object file
-Tests/funWithGraphs.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\aed2122_p11.dir\build.make CMakeFiles/aed2122_p11.dir/Tests/funWithGraphs.cpp.obj
-.PHONY : Tests/funWithGraphs.cpp.obj
+Tests/LinesGraph.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Projeto2.dir\build.make CMakeFiles/Projeto2.dir/Tests/LinesGraph.cpp.obj
+.PHONY : Tests/LinesGraph.cpp.obj
 
-Tests/funWithGraphs.i: Tests/funWithGraphs.cpp.i
-.PHONY : Tests/funWithGraphs.i
+Tests/LinesGraph.i: Tests/LinesGraph.cpp.i
+.PHONY : Tests/LinesGraph.i
 
 # target to preprocess a source file
-Tests/funWithGraphs.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\aed2122_p11.dir\build.make CMakeFiles/aed2122_p11.dir/Tests/funWithGraphs.cpp.i
-.PHONY : Tests/funWithGraphs.cpp.i
+Tests/LinesGraph.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Projeto2.dir\build.make CMakeFiles/Projeto2.dir/Tests/LinesGraph.cpp.i
+.PHONY : Tests/LinesGraph.cpp.i
 
-Tests/funWithGraphs.s: Tests/funWithGraphs.cpp.s
-.PHONY : Tests/funWithGraphs.s
+Tests/LinesGraph.s: Tests/LinesGraph.cpp.s
+.PHONY : Tests/LinesGraph.s
 
 # target to generate assembly for a file
-Tests/funWithGraphs.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\aed2122_p11.dir\build.make CMakeFiles/aed2122_p11.dir/Tests/funWithGraphs.cpp.s
-.PHONY : Tests/funWithGraphs.cpp.s
+Tests/LinesGraph.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Projeto2.dir\build.make CMakeFiles/Projeto2.dir/Tests/LinesGraph.cpp.s
+.PHONY : Tests/LinesGraph.cpp.s
 
-Tests/graph.obj: Tests/graph.cpp.obj
-.PHONY : Tests/graph.obj
+Tests/MainGraph.obj: Tests/MainGraph.cpp.obj
+.PHONY : Tests/MainGraph.obj
 
 # target to build an object file
-Tests/graph.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\aed2122_p11.dir\build.make CMakeFiles/aed2122_p11.dir/Tests/graph.cpp.obj
-.PHONY : Tests/graph.cpp.obj
+Tests/MainGraph.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Projeto2.dir\build.make CMakeFiles/Projeto2.dir/Tests/MainGraph.cpp.obj
+.PHONY : Tests/MainGraph.cpp.obj
 
-Tests/graph.i: Tests/graph.cpp.i
-.PHONY : Tests/graph.i
+Tests/MainGraph.i: Tests/MainGraph.cpp.i
+.PHONY : Tests/MainGraph.i
 
 # target to preprocess a source file
-Tests/graph.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\aed2122_p11.dir\build.make CMakeFiles/aed2122_p11.dir/Tests/graph.cpp.i
-.PHONY : Tests/graph.cpp.i
+Tests/MainGraph.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Projeto2.dir\build.make CMakeFiles/Projeto2.dir/Tests/MainGraph.cpp.i
+.PHONY : Tests/MainGraph.cpp.i
 
-Tests/graph.s: Tests/graph.cpp.s
-.PHONY : Tests/graph.s
+Tests/MainGraph.s: Tests/MainGraph.cpp.s
+.PHONY : Tests/MainGraph.s
 
 # target to generate assembly for a file
-Tests/graph.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\aed2122_p11.dir\build.make CMakeFiles/aed2122_p11.dir/Tests/graph.cpp.s
-.PHONY : Tests/graph.cpp.s
+Tests/MainGraph.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Projeto2.dir\build.make CMakeFiles/Projeto2.dir/Tests/MainGraph.cpp.s
+.PHONY : Tests/MainGraph.cpp.s
 
-Tests/tests.obj: Tests/tests.cpp.obj
-.PHONY : Tests/tests.obj
+Tests/Utilities.obj: Tests/Utilities.cpp.obj
+.PHONY : Tests/Utilities.obj
 
 # target to build an object file
-Tests/tests.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\aed2122_p11.dir\build.make CMakeFiles/aed2122_p11.dir/Tests/tests.cpp.obj
-.PHONY : Tests/tests.cpp.obj
+Tests/Utilities.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Projeto2.dir\build.make CMakeFiles/Projeto2.dir/Tests/Utilities.cpp.obj
+.PHONY : Tests/Utilities.cpp.obj
 
-Tests/tests.i: Tests/tests.cpp.i
-.PHONY : Tests/tests.i
+Tests/Utilities.i: Tests/Utilities.cpp.i
+.PHONY : Tests/Utilities.i
 
 # target to preprocess a source file
-Tests/tests.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\aed2122_p11.dir\build.make CMakeFiles/aed2122_p11.dir/Tests/tests.cpp.i
-.PHONY : Tests/tests.cpp.i
+Tests/Utilities.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Projeto2.dir\build.make CMakeFiles/Projeto2.dir/Tests/Utilities.cpp.i
+.PHONY : Tests/Utilities.cpp.i
 
-Tests/tests.s: Tests/tests.cpp.s
-.PHONY : Tests/tests.s
+Tests/Utilities.s: Tests/Utilities.cpp.s
+.PHONY : Tests/Utilities.s
 
 # target to generate assembly for a file
-Tests/tests.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\aed2122_p11.dir\build.make CMakeFiles/aed2122_p11.dir/Tests/tests.cpp.s
-.PHONY : Tests/tests.cpp.s
+Tests/Utilities.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Projeto2.dir\build.make CMakeFiles/Projeto2.dir/Tests/Utilities.cpp.s
+.PHONY : Tests/Utilities.cpp.s
 
 main.obj: main.cpp.obj
 .PHONY : main.obj
 
 # target to build an object file
 main.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\aed2122_p11.dir\build.make CMakeFiles/aed2122_p11.dir/main.cpp.obj
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Projeto2.dir\build.make CMakeFiles/Projeto2.dir/main.cpp.obj
 .PHONY : main.cpp.obj
 
 main.i: main.cpp.i
@@ -358,7 +261,7 @@ main.i: main.cpp.i
 
 # target to preprocess a source file
 main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\aed2122_p11.dir\build.make CMakeFiles/aed2122_p11.dir/main.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Projeto2.dir\build.make CMakeFiles/Projeto2.dir/main.cpp.i
 .PHONY : main.cpp.i
 
 main.s: main.cpp.s
@@ -366,7 +269,7 @@ main.s: main.cpp.s
 
 # target to generate assembly for a file
 main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\aed2122_p11.dir\build.make CMakeFiles/aed2122_p11.dir/main.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Projeto2.dir\build.make CMakeFiles/Projeto2.dir/main.cpp.s
 .PHONY : main.cpp.s
 
 # Help Target
@@ -376,31 +279,23 @@ help:
 	@echo ... clean
 	@echo ... depend
 	@echo ... edit_cache
-	@echo ... install
-	@echo ... install/local
-	@echo ... install/strip
-	@echo ... list_install_components
 	@echo ... rebuild_cache
-	@echo ... aed2122_p11
-	@echo ... gmock
-	@echo ... gmock_main
-	@echo ... gtest
-	@echo ... gtest_main
-	@echo ... Tests/Lines.obj
-	@echo ... Tests/Lines.i
-	@echo ... Tests/Lines.s
-	@echo ... Tests/Stop.obj
-	@echo ... Tests/Stop.i
-	@echo ... Tests/Stop.s
-	@echo ... Tests/funWithGraphs.obj
-	@echo ... Tests/funWithGraphs.i
-	@echo ... Tests/funWithGraphs.s
-	@echo ... Tests/graph.obj
-	@echo ... Tests/graph.i
-	@echo ... Tests/graph.s
-	@echo ... Tests/tests.obj
-	@echo ... Tests/tests.i
-	@echo ... Tests/tests.s
+	@echo ... Projeto2
+	@echo ... Tests/Application.obj
+	@echo ... Tests/Application.i
+	@echo ... Tests/Application.s
+	@echo ... Tests/FileReader.obj
+	@echo ... Tests/FileReader.i
+	@echo ... Tests/FileReader.s
+	@echo ... Tests/LinesGraph.obj
+	@echo ... Tests/LinesGraph.i
+	@echo ... Tests/LinesGraph.s
+	@echo ... Tests/MainGraph.obj
+	@echo ... Tests/MainGraph.i
+	@echo ... Tests/MainGraph.s
+	@echo ... Tests/Utilities.obj
+	@echo ... Tests/Utilities.i
+	@echo ... Tests/Utilities.s
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s
