@@ -10,24 +10,30 @@ using std::map;
 using std::string;
 
 class Application {
+    unordered_map<string,int> mapStops, mapLines;
+    MainGraph busLine;
 
-   // FileReader reader;
-    //Data data;
 public:
-    Application();
+    Application(MainGraph busLine);
     void start();
 
-    void DisplayMenu(MainGraph &busLine);
+    void DisplayMenu();
 
-    void DisplayOptions(MainGraph &busLine);
+    void DisplayOptions();
+    void StopSelect(unsigned int input );
 
-    void CoordinatesSelect();
+    void CoordinatesSelect(unsigned int input);
+    void SetDefaults();
 
-    void StopSelect(unsigned int input, MainGraph& busLine);
+    void WaysOptions();
 
-    void CoordinatesSelect(unsigned int input, MainGraph& busLine);
-    void generatePossibleFeetPaths();
-    void SetDefaults(MainGraph &busLine);
+    void LessRoteWay(unsigned int input);
+
+    void LessStopsWay(unsigned int input);
+
+    void CheapestWay(unsigned int input);
+
+    void LessChangesWay(unsigned int input);
 };
 
 #endif //PROJETO2_APPLICATION_H

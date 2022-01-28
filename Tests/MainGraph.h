@@ -26,7 +26,6 @@ class MainGraph {
         string code;
         string adress;
         string zone;
-
         list<Edge> adj; // The list of outgoing edges (to adjacent nodes)
         double distance;
         int pred;
@@ -59,32 +58,9 @@ private:
 public:
     MainGraph(int nodes, bool dir = false);
     void addEdge(int src, int dest, const string &line = "", double weight = 1,  bool isDay = true);
-    void addEdge(int src, int dest, int byStop);
-
-    void setCoordinates(int node, Coordinates c);
-    Coordinates getCoordinates(int node);
-
-
-    int size() const;
-
-    list<int> getMinStopsPath(int src, int dest);
     list<int> getMinDistancePath(int src, int dest);
-
-    list<int> getMinStopsPath(int src, int dest, const string &line);
-
-    string getLine(int id);
-    set<string> getArriveLines(int id);
-    set<string> getDepartureLines(int id);
-
-    list<Edge> getEdges(int node);
-
-    void clearAuxEdges();
-    int addAuxDestinations(const set<int>& dests, const string& line);
-    void resetTempNodes();
-
-    vector<int> getPath(int src, int dest);
-
-    set<int> getStopsThatConnects(int node, int dest);
+    Coordinates getCoordinates(int node);
+    int size() const;
     void setInfo(int idStop, vector<string> info);
 
     void setDistance(double i);
@@ -103,7 +79,23 @@ public:
 
     void destByCoordinates(double x, double y);
 
-    void localByName(string basicString);
+    void localByName(int basicString);
+
+    void destinationByName(int basicString);
+    void addEdge(int src, int dest, int byStop);
+
+    void setCoordinates(int node, Coordinates c);
+    list<int> getMinStopsPath(int src, int dest);
+    list<int> getMinStopsPath(int src, int dest, const string &line);
+    string getLine(int id);
+    set<string> getArriveLines(int id);
+    set<string> getDepartureLines(int id);
+    list<Edge> getEdges(int node);
+    void clearAuxEdges();
+    int addAuxDestinations(const set<int>& dests, const string& line);
+    void resetTempNodes();
+    vector<int> getPath(int src, int dest);
+    set<int> getStopsThatConnects(int node, int dest);
 };
 
 #endif

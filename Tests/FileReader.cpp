@@ -1,63 +1,23 @@
 #include <algorithm>
 #include "FileReader.h"
 #include "fstream"
-#include "Utilities.h"
 #include "sstream"
 #include <cmath>
-#define DEBUG
 
 int FileReader:: calculateNumberOfStops(){
     std::ifstream inFile("../dataset/stops.csv");
     return (int)std::count(std::istreambuf_iterator<char>(inFile),
                       std::istreambuf_iterator<char>(), '\n') - 1;
 }
-
-int FileReader::calculateNumberOfLines(){
-    std::ifstream inFile("../dataset/lines.csv");
-    return (int)std::count(std::istreambuf_iterator<char>(inFile),
-                      std::istreambuf_iterator<char>(), '\n') - 1;
-}
-
 FileReader::FileReader() {
-    int numberStops = calculateNumberOfStops();
-    int numberLines = calculateNumberOfLines();
-
-    #ifdef DEBUG
-    cout << "Number of stops detected: " << numberStops << endl;
-    cout << "Number of lines detected: " << numberLines << endl;
-    #endif
-
-   // mainGraph = new MainGraph(calculateNumberOfStops(), true);
-    stopsID = new unordered_map<string, int>(numberStops);
-
-   // linesGraph = new LinesGraph(numberLines);
-    linesID = new unordered_map<string, int>(numberLines);
 }
-
-void FileReader::load() {
-    loadMainGraph();
-    loadLinesGraph();
-    //calculatePossibleFeetPaths(.1); // 100 meters
-}
-
-void FileReader::loadMainGraph(){
-//    readStops();
-//    readLines();
-   // readPaths();
-}
-
-void FileReader::loadLinesGraph() {
-//    calculateLinesConnections();
-}
-
 void FileReader::readStops(unordered_map<string,int> & mapStops, MainGraph &busline){
     ifstream file("../dataset/stops.csv");
     if(!file.is_open()){
-        cerr << "Stops file doesn't exists." << endl;
+        cerr << "error." << endl;
         return;
     }
     string fileContent;
-    // Ignore first line
     getline(file, fileContent);
     int stopID = 0;
     while(getline(file, fileContent)){
@@ -71,7 +31,6 @@ void FileReader::readStops(unordered_map<string,int> & mapStops, MainGraph &busl
         getline(reader, longitude);
         info.push_back(code);info.push_back(name);info.push_back(zone);info.push_back(latitude);
         info.push_back(longitude);
-        //mainGraph->setCoordinates(stopID, {static_cast<double>(stoi(latitude)), static_cast<double>(stoi(longitude))});
         mapStops.insert({code, stopID});
         busline.setInfo(stopID,info);
         stopID++;
@@ -81,26 +40,20 @@ void FileReader::readStops(unordered_map<string,int> & mapStops, MainGraph &busl
 void FileReader::readLines(vector<string> &lines, unordered_map<string, int> &linesID) {
     ifstream file("../dataset/lines.csv");
     if(!file.is_open()){
-        cerr << "Error: Lines file doesn't exists." << endl;
+        cerr << "Error: " << endl;
         return;
     }
 
     string fileContent;
-    // Ignore first line
     getline(file, fileContent);
 
     int lineID = 0;
     while(getline(file, fileContent)){
-        //cout << fileContent << endl;
         istringstream reader(fileContent);
         string code, name;
-
         getline(reader, code, ',');
         getline(reader, name);
-
         lines.push_back(code);
-
-        //linesGraph->setLine(id, code);
         linesID.insert({code, lineID});
         lineID++;
     }
@@ -139,7 +92,7 @@ void FileReader::readPath(const string& line, ifstream &file, MainGraph &busline
     int num; file >> num;
     string source; file >> source;
     bool isDay = true;
-    if(line.back() == 'M') // it is the line
+    if(line.back() == 'M')
         {isDay = false;}
     for(int i = 0; i < num - 1; i++){
         string dest; file >> dest;
