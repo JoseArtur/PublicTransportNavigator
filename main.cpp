@@ -1,7 +1,7 @@
 #include "Tests/Application.h"
 
 int main() {
-    Application a(MainGraph(0));
+    Application a;
     a.start();
     return 0;
 }

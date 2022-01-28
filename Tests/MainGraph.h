@@ -18,6 +18,7 @@ struct Edge {
     int dest;   // Destination node
     double weight; // An integer weight
     string line;
+    bool isDay;
 };
 
 class MainGraph {
@@ -31,7 +32,6 @@ class MainGraph {
         int pred;
         string line;
         bool visited;
-
         set<string> arriveLines;
         set<string> departureLines;
 
@@ -39,11 +39,18 @@ class MainGraph {
         double longitude;
 
     };
+    int src,dest;
+public:
+    int getSrc() const;
 
+    int getDest() const;
+
+private:
     int n;
     bool hasDir;
     vector<Node> nodes;
-
+    double distance = 0.3; // the default distance is 1 km
+    bool day = true;
     void dijkstra(int s);
     void bfs(int s, const string &line);
     void bfs(int node);
@@ -51,7 +58,7 @@ class MainGraph {
     vector<pair<int,int>> tmpEdges;
 public:
     MainGraph(int nodes, bool dir = false);
-    void addEdge(int src, int dest, const string &line = "", double weight = 1);
+    void addEdge(int src, int dest, const string &line = "", double weight = 1,  bool isDay = true);
     void addEdge(int src, int dest, int byStop);
 
     void setCoordinates(int node, Coordinates c);
@@ -80,15 +87,23 @@ public:
     set<int> getStopsThatConnects(int node, int dest);
     void setInfo(int idStop, vector<string> info);
 
-    void setDistance(int i);
+    void setDistance(double i);
 
     void generatePossibleFeetPaths();
 
-    void localByCoordinates(double x, double y, double distance);
+    void localByCoordinates(double x, double y);
 
     void setNodeInfo(int id, const string &name, const string &zone, double latitude, double longitude, string code);
 
-    void addCoordinatesEdge(int v, double distance);
+    void addCoordinatesEdge(int v);
+
+    double dijkstra_distance(int a, int b);
+
+    void setTime(int i);
+
+    void destByCoordinates(double x, double y);
+
+    void localByName(string basicString);
 };
 
 #endif

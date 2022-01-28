@@ -17,15 +17,13 @@ public:
     Application();
     void start();
 
-    void DisplayMenu();
+    void DisplayMenu(MainGraph &busLine);
 
-    void DisplayOptions();
+    void DisplayOptions(MainGraph &busLine);
 
     void CoordinatesSelect();
 
-    void CoordinatesSelect(int input);
-
-    void StopSelect(unsigned int input);
+    void StopSelect(unsigned int input, MainGraph& busLine);
 
     void CoordinatesSelect(unsigned int input, MainGraph& busLine);
     void generatePossibleFeetPaths();

@@ -113,27 +113,46 @@ void FileReader::readPaths( MainGraph &busline, vector<string> &lines, unordered
 
         if(file0.is_open())
         {
+
             int num; file0 >> num;
             string source; file0 >> source;
-
+            bool isDay = true;
+            if(it.back() == 'M') // it is the line
+            {isDay = false;}
             for(int i = 0; i < num - 1; i++){
                 string dest; file0 >> dest;
 
                 int sourceID = stopsID.at(source);
                 int destID = stopsID.at(dest);
-
                 auto pair1 = busline.getCoordinates(sourceID);
                 auto pair2 = busline.getCoordinates(destID);
-
-                busline.addEdge(sourceID,destID,it,haversine(pair1,pair2));
+                busline.addEdge(sourceID,destID,it,haversine(pair1,pair2),isDay);
                 source = dest;
             }
-
-
-
         }
         if(file1.is_open())
             readPath(it, file1,busline,stopsID);
+    }
+}
+
+void FileReader::readPath(const string& line, ifstream &file, MainGraph &busline, unordered_map<string, int> stopsID) {
+    int num; file >> num;
+    string source; file >> source;
+    bool isDay = true;
+    if(line.back() == 'M') // it is the line
+        {isDay = false;}
+    for(int i = 0; i < num - 1; i++){
+        string dest; file >> dest;
+
+        int sourceID = stopsID.at(source);
+        int destID = stopsID.at(dest);
+
+        auto pair1 = busline.getCoordinates(sourceID);
+        auto pair2 = busline.getCoordinates(destID);
+
+        busline.addEdge(sourceID,destID,line,haversine(pair1,pair2),isDay);
+
+        source = dest;
     }
 }
 double FileReader::haversine(Coordinates c1, Coordinates c2) {
@@ -150,69 +169,10 @@ double FileReader::haversine(Coordinates c1, Coordinates c2) {
     double c = 2 * asin(sqrt(a));
     return rad * c;
 }
-void FileReader::readPath(const string& line, ifstream &file, MainGraph &busline, unordered_map<string, int> stopsID) {
-    int num; file >> num;
-    string source; file >> source;
 
-    for(int i = 0; i < num - 1; i++){
-        string dest; file >> dest;
 
-        int sourceID = stopsID.at(source);
-        int destID = stopsID.at(dest);
 
-        auto pair1 = busline.getCoordinates(sourceID);
-        auto pair2 = busline.getCoordinates(destID);
 
-        busline.addEdge(sourceID,destID,line,haversine(pair1,pair2));
 
-        source = dest;
-    }
-}
 
-void FileReader::calculatePossibleFeetPaths(double distance) {
-    int n = 0;
-    for(int i = 0; i < mainGraph->size() - 1; i++){
-        for(int j = i + 1; j < mainGraph->size(); j++){
-            auto pair1 = mainGraph->getCoordinates(i);
-            auto pair2 = mainGraph->getCoordinates(j);
-            double d = Utilities::haversine(pair1,pair2);
 
-            if(d <= distance){
-                mainGraph->addEdge(i, j, "feet", d);
-                n++;
-            }
-        }
-    }
-
-    #ifdef DEBUG
-        cout << "Added " << n << " edges by feet." << endl;
-    #endif
-}
-
-void FileReader::fillEdges(MainGraph graph) {
-
-}
-
-/*
-void FileReader::calculateLinesConnections() {
-    for(int i = 0; i < mainGraph->size(); i++){
-        for(const auto& e1 : mainGraph->getEdges(i)){
-            for(const auto& e2 : mainGraph->getEdges(e1.dest)){
-                if(e1.line == e2.line) continue;
-                if(e1.line == "feet" || e2.line == "feet") continue;
-                if(e1.line == "11M" && e2.line == "901") {
-                    cout << e1.dest << endl;
-                }
-                linesConnections.insert({{e1.line, e2.line}, e1.dest});
-            }
-        }
-    }
-
-    for(const auto& c : linesConnections)
-     //   linesGraph->addEdge(linesID->at(c.first.first), linesID->at(c.first.second), c.second);
-}
-
-ReadData FileReader::getReadData() {
-   // return {linesGraph, mainGraph, stopsID, linesID};
-}
-*/

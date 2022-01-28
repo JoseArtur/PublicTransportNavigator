@@ -7,16 +7,12 @@ MainGraph::MainGraph(int num, bool dir) : n(num), hasDir(dir), nodes(num + 2) {}
 
 int MainGraph::size() const { return n; }
 
-void MainGraph::addEdge(int src, int dest, const string& line, double weight) {
+void MainGraph::addEdge(int src, int dest, const string& line, double weight, bool isDay) {
     if (src < 0 || src >= n + 2 || dest < 0 || dest >= n + 2){
         cout << "Can't add the edge." << endl;
         return;
     }
-    nodes[src].adj.push_back({dest, weight, line});
-    if(line != "feet"){
-        nodes[src].departureLines.insert(line);
-        nodes[dest].arriveLines.insert(line);
-    }
+    nodes[src].adj.push_back({dest, weight, line, isDay});
     if (!hasDir) nodes[dest].adj.push_back({src, weight});
 }
 
@@ -33,8 +29,10 @@ string MainGraph::getLine(int id) {
     return nodes[id].line;
 }
 
-list<int> MainGraph::getMinDistancePath(int a, int b) {
+list<int> MainGraph::getMinDistancePath(int a , int b ) {
     dijkstra(a);
+    nodes[b].distance;
+    nodes[a].distance;
     if (nodes[b].distance == INF) return {};
 
     list<int> path;
@@ -43,8 +41,14 @@ list<int> MainGraph::getMinDistancePath(int a, int b) {
     int v = b;
     while (v != a) {
         v = nodes[v].pred;
+     //   cout << nodes[v].distance << " " << nodes[v].adress << endl;
         path.push_front(v);
     }
+    for(auto e:path){ cout<<nodes[e].code<<" "<<nodes[e].adress<<" "<<nodes[e].distance<<" ";
+        if(nodes[e].line == "feet") cout<<nodes[e].line<<endl;
+        else cout<<endl;
+    }
+    cout<<"ok";
     return path;
 }
 
@@ -61,11 +65,11 @@ void MainGraph::dijkstra(int s) {
 
     while (q.getSize()>0) {
         int u = q.removeMin();
-        //cout << "Node " << u << " with dist = " << nodes[u].distance << endl;
+     //   cout << "Node " << u << " with dist = " << nodes[u].distance << endl;
         nodes[u].visited = true;
 
         for (const auto &e : nodes[u].adj) {
-            if(e.line == "feet") continue;
+            if((day && e.isDay) || (!day && !e.isDay) ){
             int v = e.dest;
             double w = e.weight;
             if (!nodes[v].visited && nodes[u].distance + w < nodes[v].distance) {
@@ -73,6 +77,7 @@ void MainGraph::dijkstra(int s) {
                 q.decreaseKey(v, nodes[v].distance);
                 nodes[v].pred = u;
                 nodes[v].line = e.line;
+            }
             }
         }
     }
@@ -91,14 +96,16 @@ void MainGraph::bfs(int v) {
         int u = q.front(); q.pop();
         //cout << u << " "; // show node order
         for (const auto& e : nodes[u].adj) {
-            int w = e.dest;
+            if((day && e.isDay) || (!day && !e.isDay) ){
+
+                int w = e.dest;
             if (!nodes[w].visited) {
                 q.push(w);
                 nodes[w].visited = true;
                 nodes[w].distance = nodes[u].distance + 1;
                 nodes[w].pred = u;
                 nodes[w].line = e.line;
-            }
+            }}
         }
     }
 }
@@ -214,12 +221,12 @@ void  MainGraph::setNodeInfo(int id, const string &name, const string &zone, dou
     nodes[id].code = code;
 }
 
-void MainGraph::setDistance(int i) {
-
+void MainGraph::setDistance(double i) {
+        distance = i;
 }
 void MainGraph::generatePossibleFeetPaths()
-{int distance = 4;
-    for(int i = 0; i < n - 1; i++){
+{
+    for(int i = 0; i < n ; i++){
         for(int j = i + 1; j < n; j++){
             auto pair1 = getCoordinates(i);
             auto pair2 = getCoordinates(j);
@@ -231,22 +238,26 @@ void MainGraph::generatePossibleFeetPaths()
         }
     }
 }
-void MainGraph::localByCoordinates(double x, double y, double distance) {
+void MainGraph::localByCoordinates(double x, double y) {
 
-    int src = n - 2;
+     src = n - 2;
     vector<string> a;
     setNodeInfo(src,"initial"," ",x,y,"INIT");
-    addCoordinatesEdge(src,distance);
-    /*for(auto a: nodes[src].adj)
-    {
-        cout << a.dest << " " << a.line << nodes[a.dest].name << endl;
-    }*/
+    addCoordinatesEdge(src);
     generatePossibleFeetPaths();
+
 }
-void MainGraph::addCoordinatesEdge(int v, double distance)
+void MainGraph::destByCoordinates(double x, double y) {
+
+    dest = n - 1;
+    setNodeInfo(dest,"destination"," ",x,y,"DEST");
+    addCoordinatesEdge(dest);
+
+}
+void MainGraph::addCoordinatesEdge(int v)
 {
     auto pair1 = getCoordinates(v);
-    for(int i = 0; i < n -1; i++)
+    for(int i = 0; i < n ; i++)
     {
         auto pair2 = getCoordinates(i);
         double d = FileReader::haversine(
@@ -257,4 +268,27 @@ void MainGraph::addCoordinatesEdge(int v, double distance)
             addEdge(v, i, "feet", d);
         }
     }
+}
+double MainGraph::dijkstra_distance(int a, int b) {
+    dijkstra(a);
+    if (nodes[b].distance == INF) return -1;
+    auto f= nodes[b].adress;
+    return nodes[b].distance;
+}
+
+void MainGraph::setTime(int i) {
+    if(i>0 && i<4) day = false;
+}
+
+void MainGraph::localByName(string basicString) {
+
+}
+
+int MainGraph::getSrc() const {
+
+    return src;
+}
+
+int MainGraph::getDest() const {
+    return dest;
 }
