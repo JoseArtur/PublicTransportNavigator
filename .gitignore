@@ -38,4 +38,3 @@
 cmake-build-debug/
 cmake-build-debug-coverage/
 lib/
-docs/output

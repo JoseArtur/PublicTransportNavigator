@@ -13,6 +13,7 @@ void Application::start() {
 
     //  busLine((reader.calculateNumberOfStops()+2),true);
      reader.readStops(mapStops,busLine);
+     busLine.setMapStops(mapStops);
      vector<string> lines;
     // busLine.addEdge(125,1462,"1",0.4);
      reader.readLines(lines,mapLines);
@@ -63,6 +64,8 @@ void Application::DisplayOptions() {
                 "\n3) SET SOURCE STOP"
                 "\n4) SET DESTINATION STOP"
                 "\n5) SELECT THE WAY"
+                "\nEXTRA FEATURES"
+                "\n 6) TURIST THAT WANT TO KNOW THE CITY"
                 "\n0) - Back"
                 "\n\nChoose an option: ";
         cin >> input;
@@ -74,6 +77,11 @@ void Application::DisplayOptions() {
             case 3: StopSelect(input); break;
             case 4:StopSelect(input); break;
             case 5: WaysOptions();break;
+            case 6 : {
+               int a = busLine.kruskal();
+               cout<<a;
+               break;
+            }
             default: cout << "\n\nInvalid input!\n\n";
         }
     } while (input);
@@ -162,7 +170,7 @@ void Application::LessStopsWay(unsigned int input) {
 }
 
 void Application::CheapestWay(unsigned int input) {
-
+    busLine.getCheapest(busLine.getSrc(),busLine.getDest());
 }
 
 void Application::LessChangesWay(unsigned int input) {

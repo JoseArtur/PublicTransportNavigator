@@ -176,30 +176,6 @@ Tests/FileReader.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Projeto2.dir\build.make CMakeFiles/Projeto2.dir/Tests/FileReader.cpp.s
 .PHONY : Tests/FileReader.cpp.s
 
-Tests/LinesGraph.obj: Tests/LinesGraph.cpp.obj
-.PHONY : Tests/LinesGraph.obj
-
-# target to build an object file
-Tests/LinesGraph.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Projeto2.dir\build.make CMakeFiles/Projeto2.dir/Tests/LinesGraph.cpp.obj
-.PHONY : Tests/LinesGraph.cpp.obj
-
-Tests/LinesGraph.i: Tests/LinesGraph.cpp.i
-.PHONY : Tests/LinesGraph.i
-
-# target to preprocess a source file
-Tests/LinesGraph.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Projeto2.dir\build.make CMakeFiles/Projeto2.dir/Tests/LinesGraph.cpp.i
-.PHONY : Tests/LinesGraph.cpp.i
-
-Tests/LinesGraph.s: Tests/LinesGraph.cpp.s
-.PHONY : Tests/LinesGraph.s
-
-# target to generate assembly for a file
-Tests/LinesGraph.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Projeto2.dir\build.make CMakeFiles/Projeto2.dir/Tests/LinesGraph.cpp.s
-.PHONY : Tests/LinesGraph.cpp.s
-
 Tests/MainGraph.obj: Tests/MainGraph.cpp.obj
 .PHONY : Tests/MainGraph.obj
 
@@ -287,9 +263,6 @@ help:
 	@echo ... Tests/FileReader.obj
 	@echo ... Tests/FileReader.i
 	@echo ... Tests/FileReader.s
-	@echo ... Tests/LinesGraph.obj
-	@echo ... Tests/LinesGraph.i
-	@echo ... Tests/LinesGraph.s
 	@echo ... Tests/MainGraph.obj
 	@echo ... Tests/MainGraph.i
 	@echo ... Tests/MainGraph.s

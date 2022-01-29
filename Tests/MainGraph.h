@@ -22,6 +22,14 @@ struct Edge {
 };
 
 class MainGraph {
+    unordered_map<string,int> mapStops, mapLines;
+public:
+    void setMapStops(const unordered_map<string, int> &mapStops);
+
+private:
+
+    vector< pair<int, pair<int, int>> > edges;
+
     struct Node {
         string code;
         string adress;
@@ -31,8 +39,6 @@ class MainGraph {
         int pred;
         string line;
         bool visited;
-        set<string> arriveLines;
-        set<string> departureLines;
 
         double latitude;
         double longitude;
@@ -53,7 +59,6 @@ private:
     void dijkstra(int s);
     void bfs(int s, const string &line);
     void bfs(int node);
-
     vector<pair<int,int>> tmpEdges;
 public:
     MainGraph(int nodes, bool dir = false);
@@ -82,20 +87,17 @@ public:
     void localByName(int basicString);
 
     void destinationByName(int basicString);
-    void addEdge(int src, int dest, int byStop);
+    int kruskal();
 
-    void setCoordinates(int node, Coordinates c);
     list<int> getMinStopsPath(int src, int dest);
-    list<int> getMinStopsPath(int src, int dest, const string &line);
-    string getLine(int id);
-    set<string> getArriveLines(int id);
-    set<string> getDepartureLines(int id);
-    list<Edge> getEdges(int node);
-    void clearAuxEdges();
-    int addAuxDestinations(const set<int>& dests, const string& line);
-    void resetTempNodes();
-    vector<int> getPath(int src, int dest);
-    set<int> getStopsThatConnects(int node, int dest);
+
+    static bool sortByWeight(pair<int, pair<int, int>> e1, pair<int, pair<int, int>> e2);
+
+    void dijkstraByZone(int s);
+
+    string getZone(int node);
+
+    list<int> getCheapest(int a, int b);
 };
 
 #endif

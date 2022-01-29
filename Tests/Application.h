@@ -3,11 +3,8 @@
 
 #include <map>
 #include <string>
-#include "graph.h"
 #include "MainGraph.h"
 #include "FileReader.h"
-using std::map;
-using std::string;
 
 class Application {
     unordered_map<string,int> mapStops, mapLines;

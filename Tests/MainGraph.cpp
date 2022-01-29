@@ -1,7 +1,10 @@
 #include <queue>
 #include "MainGraph.h"
 #include "FileReader.h"
-#define INF 1241412421414.5
+#include <set>
+#include <algorithm>
+#include "disjointSets.h"
+#define INF INT_MAX / 2
 
 MainGraph::MainGraph(int num, bool dir) : n(num), hasDir(dir), nodes(num + 2) {}
 
@@ -9,11 +12,12 @@ int MainGraph::size() const { return n; }
 
 void MainGraph::addEdge(int src, int dest, const string& line, double weight, bool isDay) {
     if (src < 0 || src >= n + 2 || dest < 0 || dest >= n + 2){
-        cout << "Can't add the edge." << endl;
+        cout << "error." << endl;
         return;
     }
     nodes[src].adj.push_back({dest, weight, line, isDay});
     if (!hasDir) nodes[dest].adj.push_back({src, weight});
+    edges.push_back({weight, {src, dest}});
 }
 
 
@@ -35,9 +39,18 @@ list<int> MainGraph::getMinDistancePath(int a , int b ) {
         v = nodes[v].pred;
         path.push_front(v);
     }
-    for(auto e:path){ cout<<nodes[e].code<<" "<<nodes[e].adress<<" "<<nodes[e].distance<<" ";
-        if(nodes[e].line == "feet") cout<<nodes[e].line<<endl;
+    double oldDistance = 0;
+    for(auto e:path){
+        cout<<nodes[e].code<<" "<<nodes[e].adress<<" "<<nodes[e].line<<" "<<nodes[e].distance<<" ";
+        if(nodes[e].line == "walk") {
+            double walked = 0;
+            if(nodes[e].distance != 0)
+            {
+                walked = nodes[e].distance - oldDistance;
+            cout<<nodes[e].line<<" "<< walked * 1000<<" METERS to walk"<<endl;}
+        }
         else cout<<endl;
+         oldDistance = nodes[e].distance;
     }
     cout<<"ok";
     return path;
@@ -72,7 +85,44 @@ void MainGraph::dijkstra(int s) {
         }
     }
 }
+void MainGraph::dijkstraByZone(int s) {
+    MinHeap<int, double> q(n, -1);
+    for (int v = 0; v < n; v++) {
+        nodes[v].distance = INF;
+        q.insert(v, INF);
+        nodes[v].visited = false;
+    }
+    nodes[s].distance = 0;
+    q.decreaseKey(s, 0);
+    nodes[s].pred = s;
 
+    while (q.getSize()>0) {
+        int u = q.removeMin();
+        nodes[u].visited = true;
+        int countZones ;
+        set<string> zones;
+        for (const auto &e : nodes[u].adj) {
+            if((day && e.isDay) || (!day && !e.isDay) ){
+                if(nodes[u].zone != getZone(e.dest)){
+                    countZones = 1;
+                    zones.insert(nodes[u].zone);
+                    zones.insert(getZone(e.dest));
+                }
+                zones.insert(nodes[u].zone);
+                zones.erase("");
+                zones.erase(" ");
+                int v = e.dest;
+                int w = zones.size();
+                if (!nodes[v].visited && nodes[u].distance + w < nodes[v].distance) {
+                    nodes[v].distance = nodes[u].distance + w;
+                    q.decreaseKey(v, nodes[v].distance);
+                    nodes[v].pred = u;
+                    nodes[v].line = e.line;
+                }
+            }
+        }
+    }
+}
 void MainGraph::bfs(int v) {
     for (int i = 0; i < n; i++){
         nodes[i].visited = false;
@@ -111,13 +161,13 @@ list<int> MainGraph::getMinStopsPath(int src, int dest) {
 
     path.push_front(src);
     for(auto e:path){ cout<<nodes[e].code<<" "<<nodes[e].adress<<" "<<nodes[e].distance<<" ";
-        if(nodes[e].line == "feet") cout<<nodes[e].line<<endl;
+        if(nodes[e].line == "walk") cout<<nodes[e].line<<endl;
         else cout<<endl;
     }
     return path;
 }
 
-
+/*
 list<int> MainGraph::getMinStopsPath(int src, int dest, const string &line) {
     bfs(src, line);
     if(nodes[dest].distance == -1 || nodes[dest].pred == -1) return {};
@@ -132,7 +182,7 @@ list<int> MainGraph::getMinStopsPath(int src, int dest, const string &line) {
     path.push_front(src);
     return path;
 }
-
+*/
 void MainGraph::bfs(int v, const string &line) {
     for (int i = 0; i < n + 2; i++){
         nodes[i].visited = false;
@@ -163,32 +213,6 @@ void MainGraph::bfs(int v, const string &line) {
     }
 }
 
-void MainGraph::clearAuxEdges() {
-    nodes[n].adj.clear();
-
-    for(const auto& pair : tmpEdges){
-        if(pair.first == 868 && pair.second == 2488)
-            cout << "";
-        auto l = nodes[pair.first].adj;
-        for(auto i = l.begin(); i != l.end(); i++){
-            if((*i).dest == pair.second){
-                l.erase(i);
-                break;
-            }
-        }
-    }
-    tmpEdges.clear();
-}
-
-int MainGraph::addAuxDestinations(const set<int> &dests, const string& line) {
-    for(const auto& dest : dests){
-        if(dest == 868)
-            cout << "";
-        tmpEdges.push_back({dest, n + 1});
-        addEdge(dest, n + 1, line);
-    }
-    return n + 1;
-}
 void MainGraph::setInfo(int idStop, vector<string> info){
     nodes[idStop].code = info[0];
     nodes[idStop].adress = info[1];
@@ -217,20 +241,20 @@ void MainGraph::generatePossibleFeetPaths()
                     pair1,pair2);
 
             if(d <= distance)
-                addEdge(i, j, "feet", d);
+                addEdge(i, j, "walk", d,day);
         }
     }
 }
 void MainGraph::localByCoordinates(double x, double y) {
      src = n - 2;
     vector<string> a;
-    setNodeInfo(src,"initial"," ",x,y,"INIT");
+    setNodeInfo(src,"Start Position"," ",x,y,"START");
     addCoordinatesEdge(src);
     generatePossibleFeetPaths();
 }
 void MainGraph::destByCoordinates(double x, double y) {
     dest = n - 1;
-    setNodeInfo(dest,"destination"," ",x,y,"DEST");
+    setNodeInfo(dest,"Final Position"," ",x,y,"END");
     addCoordinatesEdge(dest);
 }
 
@@ -244,8 +268,8 @@ void MainGraph::addCoordinatesEdge(int v)
                 pair1,pair2);
         if(d <= distance && v != i)
         {
-            addEdge(i, v, "feet", d);
-            addEdge(v, i, "feet", d);
+            addEdge(i, v, "walk", d, day);
+            addEdge(v, i, "walk", d, day);
         }
     }
 }
@@ -287,3 +311,66 @@ void MainGraph::destinationByName(int id) {
     setNodeInfo(dest,"destination"," ",c1.lat,c1.lon,"DEST");
     addCoordinatesEdge(dest);
 }
+ bool MainGraph::sortByWeight(pair<int, pair<int, int>> e1, pair<int, pair<int, int>> e2){
+    return e1.first < e2.first;
+}
+int MainGraph::kruskal(){
+    int T = 0;
+    DisjointSets<int> sets;
+    set<int> parades;
+    set<int> ends;
+    for(int i = 1; i < nodes.size(); i++)
+        sets.makeSet(i);
+    sort(edges.begin(),edges.end(), sortByWeight);
+    for(auto edge:edges) {
+        if (sets.find(edge.second.first) != sets.find(edge.second.second) && (parades.find(edge.second.first) == parades.end()) && (ends.find(edge.second.second) == ends.end())) {
+            parades.insert(edge.second.first);
+            ends.insert(edge.second.second);
+            auto iter = std::find_if(std::begin(mapStops), std::end(mapStops),[& edge](auto &&pair) { return pair.second == edge.second.first; });
+            string source = iter->first;
+            auto iter2 = std::find_if(std::begin(mapStops), std::end(mapStops),[& edge](auto &&pair) { return pair.second == edge.second.second; });
+            string dest = iter2 -> first;
+             cout <<source << " - " << dest << endl;
+            T = T + edge.first;
+            sets.unite(edge.second.first, edge.second.second);
+        }
+    }
+    return T;
+}
+
+void MainGraph::setMapStops(const unordered_map<string, int> &mapStops) {
+    MainGraph::mapStops = mapStops;
+}
+
+
+list<int> MainGraph::getCheapest(int a , int b ) {
+    dijkstraByZone(a);
+
+    if (nodes[b].distance == INF) return {};
+
+    list<int> path;
+    if (nodes[b].distance == INF) return path;
+    path.push_back(b);
+    int v = b;
+    while (v != a) {
+        v = nodes[v].pred;
+        path.push_front(v);
+    }
+    set<string> zones; // In here all zones will be added
+    for(auto e:path){
+        zones.insert(nodes[e].zone);
+        cout<<nodes[e].code<<" "<<nodes[e].adress<<" "<<nodes[e].line<<" "<<nodes[e].distance<<" ";
+        if(nodes[e].line == "walk") cout<<nodes[e].line<<endl;
+        else cout<<endl;
+    }
+    zones.erase("");
+    zones.erase(" ");
+
+    cout<<"You are passing through "<<zones.size()<<" zones";
+    return path;
+}
+
+string MainGraph::getZone(int node) {
+    return nodes[node].zone;
+}
+
