@@ -1,35 +1,17 @@
 #include <fstream>
 #include <algorithm>
 #include "Application.h"
-
-
 using namespace std;
-
-
 void Application::start() {
 
     FileReader reader;
     busLine = MainGraph(reader.calculateNumberOfStops()+2,true);
-
-    //  busLine((reader.calculateNumberOfStops()+2),true);
      reader.readStops(mapStops,busLine);
      busLine.setMapStops(mapStops);
      vector<string> lines;
-    // busLine.addEdge(125,1462,"1",0.4);
      reader.readLines(lines,mapLines);
      reader.readPaths(busLine,lines,mapStops);
-    list<int> lib;
-     double a ;
-     //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-  //   busLine.localByCoordinates(41.180548, -8.594938);
-  // busLine.destByCoordinates(41.172245, -8.597604);
-  // busLine.getMinDistancePath(busLine.getSrc(),busLine.getDest());
-    //a = busLine.dijkstra_distance(busLine.getSrc(),busLine.getDest());
-    //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-   // busLine.localByName(913);
-   // busLine.destinationByName(910);
-  //  busLine.getMinDistancePath(busLine.getSrc(),busLine.getDest());
-   DisplayMenu();
+     DisplayMenu();
 
 }
 void Application::DisplayMenu() {

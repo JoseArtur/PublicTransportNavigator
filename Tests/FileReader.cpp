@@ -6,9 +6,7 @@
 
 int FileReader:: calculateNumberOfStops(){
     std::ifstream inFile("../dataset/stops.csv");
-    return (int)std::count(std::istreambuf_iterator<char>(inFile),
-                      std::istreambuf_iterator<char>(), '\n') - 1;
-}
+    return (int)std::count(std::istreambuf_iterator<char>(inFile),std::istreambuf_iterator<char>(), '\n') - 1;}
 FileReader::FileReader() {
 }
 void FileReader::readStops(unordered_map<string,int> & mapStops, MainGraph &busline){
@@ -84,11 +82,11 @@ void FileReader::readPaths( MainGraph &busline, vector<string> &lines, unordered
             }
         }
         if(file1.is_open())
-            readPath(it, file1,busline,stopsID);
+            LinesEdgesControl(it, file1, busline, stopsID);
     }
 }
 
-void FileReader::readPath(const string& line, ifstream &file, MainGraph &busline, unordered_map<string, int> stopsID) {
+void FileReader::LinesEdgesControl(const string& line, ifstream &file, MainGraph &busline, unordered_map<string, int> stopsID) {
     int num; file >> num;
     string source; file >> source;
     bool isDay = true;
