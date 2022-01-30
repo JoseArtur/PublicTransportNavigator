@@ -174,5 +174,5 @@ void Application::CheapestWay(unsigned int input) {
 }
 
 void Application::LessChangesWay(unsigned int input) {
-
+    busLine.getMinLines(busLine.getSrc(),busLine.getDest());
 }

@@ -98,6 +98,13 @@ public:
     string getZone(int node);
 
     list<int> getCheapest(int a, int b);
+
+    void dijkstraByLine(int s);
+
+    string getLineOfEdge(int node);
+
+    list<int> getMinLines(int a, int b);
+    void result(list<int> path, int dest);
 };
 
 #endif
