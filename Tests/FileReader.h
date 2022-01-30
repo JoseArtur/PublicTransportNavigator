@@ -1,5 +1,5 @@
-#ifndef PROJETO2_FILEREADER_H
-#define PROJETO2_FILEREADER_H
+#ifndef FILEREADER_H
+#define FILEREADER_H
 
 #include "MainGraph.h"
 #include <map>
@@ -19,4 +19,4 @@ public:
     static double haversine(Coordinates c1, Coordinates c2);
 };
 
-#endif //PROJETO2_FILEREADER_H
+#endif

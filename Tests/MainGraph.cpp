@@ -209,17 +209,14 @@ void  MainGraph::setNodeInfo(int id, const string &name, const string &zone, dou
 void MainGraph::setDistance(double i) {
         distance = i;
 }
-void MainGraph::generatePossibleFeetPaths()
+void MainGraph::WalkPossibleRotes()
 {
     for(int i = 0; i < n ; i++){
         for(int j = i + 1; j < n; j++){
             auto pair1 = getCoordinates(i);
             auto pair2 = getCoordinates(j);
-            double d = FileReader::haversine(
-                    pair1,pair2);
-
-            if(d <= distance)
-                addEdge(i, j, "walk", d,day);
+            double d = FileReader::haversine(pair1,pair2);
+            if(d <= distance) addEdge(i, j, "walk", d,day);
         }
     }
 }
@@ -228,7 +225,7 @@ void MainGraph::localByCoordinates(double x, double y) {
     vector<string> a;
     setNodeInfo(src,"Start Position"," ",x,y,"START");
     addCoordinatesEdge(src);
-    generatePossibleFeetPaths();
+    WalkPossibleRotes();
 }
 void MainGraph::destByCoordinates(double x, double y) {
     dest = n - 1;
@@ -242,8 +239,7 @@ void MainGraph::addCoordinatesEdge(int v)
     for(int i = 0; i < n ; i++)
     {
         auto pair2 = getCoordinates(i);
-        double d = FileReader::haversine(
-                pair1,pair2);
+        double d = FileReader::haversine(pair1,pair2);
         if(d <= distance && v != i)
         {
             addEdge(i, v, "walk", d, day);
@@ -280,7 +276,7 @@ void MainGraph::localByName(int id) {
     vector<string> a;
     setNodeInfo(src,"ORIGIN"," ",c1.lat,c1.lon,"ORIG");
     addCoordinatesEdge(src);
-    generatePossibleFeetPaths();
+    WalkPossibleRotes();
 }
 void MainGraph::destinationByName(int id) {
     dest = n - 1;
@@ -308,7 +304,7 @@ int MainGraph::kruskal(){
             auto iter2 = std::find_if(std::begin(mapStops), std::end(mapStops),[& edge](auto &&pair) { return pair.second == edge.second.second; });
             string dest = iter2 -> first;
              cout <<source << " - " << dest << endl;
-            T = T + edge.first;
+            T+= edge.first;
             sets.unite(edge.second.first, edge.second.second);
         }
     }
@@ -358,9 +354,7 @@ string MainGraph::getZone(int node) {
     return nodes[node].zone;
 }
 
-string MainGraph::getLineOfEdge(int node) {
-    return nodes[node].line;
-}
+
 void MainGraph::result(list<int> path,int dest){
     set<string> zones; // In here all zones will be added
     set<string> lines;
